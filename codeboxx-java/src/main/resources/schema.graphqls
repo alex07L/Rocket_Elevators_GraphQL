@@ -1,0 +1,56 @@
+type Address {
+  street: String
+  suite: String
+  city: String
+  postalCode: String
+  country: String
+}
+type Building_detail{
+	key: String
+	value: String
+}
+
+type Intervention {
+	id: Int!
+	building_id: Int!
+    start_intervention: String
+    end_intervention: String
+    employee_id: Int!
+	building_details: [Building_detail]
+    address: Address
+}
+
+type Customer {
+	entrepriseName: String
+	nameContact: String
+	cellPhone: String
+	email: String
+	description: String
+	authorityName: String
+	authorityPhone: String
+	authorityEmail: String
+	address: Address
+}
+type Employee {
+	id: Int!
+	firstName: String
+	lastName: String
+	email: String
+	title: String
+	interventions: [Intervention]
+}
+type Building {
+	id: Int!
+	address: Address
+	customer: Customer
+	interventions: [Intervention]
+}
+
+type Query {
+  intervention(id:Int!): Intervention
+  buildings(id: Int!): Building
+  employee(id: Int!): Employee
+}
+schema {
+  query: Query
+}
