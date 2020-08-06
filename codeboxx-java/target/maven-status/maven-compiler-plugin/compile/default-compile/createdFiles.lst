@@ -1,0 +1,9 @@
+ca\codeboxx\model\Employee.class
+ca\codeboxx\model\Building_details.class
+ca\codeboxx\model\Intervention.class
+ca\codeboxx\model\Address.class
+ca\codeboxx\Query.class
+ca\codeboxx\GraphQLEndpoint.class
+ca\codeboxx\Database.class
+ca\codeboxx\model\Customer.class
+ca\codeboxx\model\Building.class
