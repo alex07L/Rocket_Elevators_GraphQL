@@ -16,7 +16,7 @@ type Intervention {
     start_intervention: String
     end_intervention: String
     employee_id: Int!
-	building_details: [Building_detail]
+	build: Build
     address: Address
 }
 
@@ -44,6 +44,17 @@ type Building {
 	address: Address
 	customer: Customer
 	interventions: [Intervention]
+}
+type Build {
+	id: Int!
+	fullName: String
+	email: String
+	cellPhone: String
+	techName: String
+	techEmail: String
+	address: Address
+	customer_id: Int
+	building_details: [Building_detail]
 }
 
 type Query {

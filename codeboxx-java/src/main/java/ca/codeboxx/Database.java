@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.codeboxx.model.Address;
+import ca.codeboxx.model.Build;
 import ca.codeboxx.model.Building;
 import ca.codeboxx.model.Building_details;
 import ca.codeboxx.model.Customer;
@@ -73,6 +74,26 @@ public class Database {
 
 		return building_details;
 	}
+	
+	public Build getBuild(int building_id) {
+		Build d = null;
+		PreparedStatement m;
+		try {
+			m = mysql.prepareStatement(
+					"SELECT b.id, b.fullName,b.email,b.cellPhone,b.techName,b.techPhone,b.techEmail,b.customer_id, a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON b.address_id=a.id WHERE b.id="
+							+ building_id);
+			// Execute the Query, and get a java ResultSet
+			ResultSet rs2 = m.executeQuery();
+			// Let's iterate through the java ResultSet
+			if(rs2.next()) {
+				d = new Build(rs2.getInt("id"), rs2.getString("fullName"), rs2.getString("email"), rs2.getString("cellPhone"), rs2.getString("techPhone"), rs2.getString("techEmail"), new Address(rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"), rs2.getString("postalCode"), rs2.getString("country")), rs2.getInt("customer_id"), getBuildingDetails(building_id));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return d;
+	}
 
 	public Intervention getIntervention(int id) {
 		Intervention i = null;
@@ -99,7 +120,7 @@ public class Database {
 					i = new Intervention(id, rs.getInt("employee_id"), building_id, rs.getString("start_intervention"),
 							rs.getString("end_intervention"),
 							new Address(rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
-									rs2.getString("postalCode"), rs2.getString("country")),getBuildingDetails(building_id));
+									rs2.getString("postalCode"), rs2.getString("country")),getBuild(building_id));
 
 				}
 			}
@@ -129,7 +150,7 @@ public class Database {
 			List<Intervention> l = new ArrayList<Intervention>();
 			Address a = null;
 			Customer c = null;
-			List<Building_details> bb = getBuildingDetails(id);
+			Build bb = getBuild(id);
 			if (rs.next()) {
 				PreparedStatement m = mysql.prepareStatement(
 						"SELECT a.street, a.suite, a.city, a.postalCode, a.country,c.entrepriseName , c.nameContact ,c.description, c.email, c.cellPhone ,c.authorityEmail ,c.authorityName, c.authorityPhone, a2.street AS 'Cstreet', a2.suite AS 'Csuite', a2.city AS 'Ccity', a2.postalCode AS 'CpostalCode', a2.country AS 'Ccountry' FROM buildings b JOIN addresses a ON a.id=b.address_id JOIN customers c ON c.id= b.customer_id JOIN addresses a2 ON a2.id=c.address_id WHERE b.id="
@@ -193,13 +214,13 @@ public class Database {
 					a = new Address(rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
 							rs2.getString("postalCode"), rs2.getString("country"));
 					l.add(new Intervention(rs.getInt("id"), rs.getInt("employee_id"), rs.getInt("building_id"), rs.getString("start_intervention"),
-							rs.getString("end_intervention"), a, getBuildingDetails(rs.getInt("building_id"))));
+							rs.getString("end_intervention"), a, getBuild(rs.getInt("building_id"))));
 
 				}
 			}
 			while (rs.next()) {
 				l.add(new Intervention(rs.getInt("id"), rs.getInt("employee_id"), rs.getInt("building_id"), rs.getString("start_intervention"),
-						rs.getString("end_intervention"), a,  getBuildingDetails(rs.getInt("building_id"))));
+						rs.getString("end_intervention"), a,  getBuild(rs.getInt("building_id"))));
 			}
 			
 			PreparedStatement employee = mysql.prepareStatement(
