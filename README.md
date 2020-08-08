@@ -49,7 +49,8 @@ buildings(id: 2){
 ## Question 3: Get all interventions made by an employee
 You can change id by a id of a employee
 ```
-employee(id: 3){
+{
+    employee(id: 3){
   firstName
   lastName
   email
@@ -59,9 +60,21 @@ employee(id: 3){
     start_intervention
     end_intervention
     build{
-    building_details{
-      key
-      value
+      fullName
+      email
+      cellPhone
+      techName
+      techEmail
+      address{
+        street
+        city
+        country
+        postalCode
+      }
+      building_details{
+        key
+        value
+      }
     }
     }
   }
