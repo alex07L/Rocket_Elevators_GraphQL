@@ -10,16 +10,16 @@ public class Intervention {
 	private final String start_intervention;
 	private final String end_intervention;
 	private final Address address;
-	private final List<Building_details> building_details;
+	private final Build build;
 	
-	public Intervention(int id, int employee_id, int building_id, String start, String end, Address address, List<Building_details> building_details) {
+	public Intervention(int id, int employee_id, int building_id, String start, String end, Address address, Build build) {
 		this.id=id;
 		this.employee_id=employee_id;
 		this.building_id=building_id;
 		this.start_intervention=start;
 		this.end_intervention=end;
 		this.address=address;
-		this.building_details=building_details;
+		this.build=build;
 	}
 	
 	public int getId() {
@@ -46,8 +46,8 @@ public class Intervention {
 		return address;
 	}
 	
-	public List<Building_details> getBuilding_details() {
-		return building_details;
+	public Build getBuild() {
+		return build;
 	}
 
 }
