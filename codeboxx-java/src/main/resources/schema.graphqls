@@ -12,10 +12,18 @@ type Building_detail{
 
 type Intervention {
 	id: Int!
-	building_id: Int!
+	customer_id: Int
+	author_id: Int
+	building_id: Int
     start_intervention: String
     end_intervention: String
-    employee_id: Int!
+    employee_id: Int
+    battery_id: Int
+    column_id: Int
+    elevator_id: Int
+    status: String
+    result: String
+    rapport: String
 	build: Build
     address: Address
 }
@@ -52,16 +60,67 @@ type Build {
 	cellPhone: String
 	techName: String
 	techEmail: String
+	techPhone: String
 	address: Address
 	customer_id: Int
 	building_details: [Building_detail]
+}
+
+type Battery {
+	id: Int!
+	status: String
+}
+
+type Column {
+	id: Int!
+	status: String
+}
+
+type Lead {
+	id: Int!
+	fullName: String
+	entrepriseName: String
+	cellPhone: String
+	projectName: String
+	description: String
+	type: String
+}
+
+type Elevator {
+	id: Int
+	status: String
+	serialNumber: String
+	inspectionDate: String
+	installDate: String
+	certificat: String
+	information: String
+	note: String
+	type: String
+	column_id: Int
+	category_id: Int
 }
 
 type Query {
   intervention(id:Int!): Intervention
   buildings(id: Int!): Building
   employee(id: Int!): Employee
+  interventionList: [Intervention]
+  battery(id: Int!): Battery
+  column(id: Int!): Column
+  elevatorList: [Elevator]
+  elevator(id: Int!): Elevator
+  buildList: [Build]
+  leads: [Lead]
 }
+
+type Mutation {
+	updateIntervention(id: Int!, status: String!): Intervention
+	updateElevator(id: Int!, status: String!): Elevator
+	updateColumn(id: Int!, status: String!): Column
+	updateBattery(id: Int!, status: String!): Battery
+}
+
 schema {
   query: Query
+  mutation: Mutation
 }
