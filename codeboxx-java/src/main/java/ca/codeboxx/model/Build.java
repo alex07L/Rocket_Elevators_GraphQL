@@ -10,11 +10,12 @@ public class Build {
 	private final String cellPhone;
 	private final String techName;
 	private final String techEmail;
+	private final String techPhone;
 	private final Address address;
 	private final int customer_id;
 	private final List<Building_details> building_details;
 	
-	public Build(int id, String fullname, String email, String cellPhone, String techName, String techEmail, Address address, int customer_id, List<Building_details> building_details) {
+	public Build(int id, String fullname, String email, String cellPhone, String techName, String techEmail, String techPhone, Address address, int customer_id, List<Building_details> building_details) {
 		this.building_details=building_details;
 		this.address=address;
 		this.id=id;
@@ -24,6 +25,7 @@ public class Build {
 		this.techEmail=techEmail;
 		this.techName=techName;
 		this.customer_id=customer_id;
+		this.techPhone=techPhone;
 	}
 	
 	public Address getAddress() {
@@ -36,6 +38,10 @@ public class Build {
 	
 	public String getCellPhone() {
 		return cellPhone;
+	}
+	
+	public String getTechPhone() {
+		return techPhone;
 	}
 	
 	public int getCustomer_id() {
