@@ -14,19 +14,19 @@ public class Mutation implements GraphQLRootResolver {
 	}
 	
 	public Intervention updateIntervention(int id, String status) {
-		Database d = new Database("jdbc:mysql://localhost:3306/rocket-foundation","root","Alexandre07!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey", "codeboxx", "Codeboxx1!");
+		Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
 		return d.updateIntervention(id, status);
 	}
 	public Elevator updateElevator(int id, String status) {
-		Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey", "codeboxx", "Codeboxx1!");
+		Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
     	return d.updateElevator(id, status);
 	}
 	public Column updateColumn(int id, String status) {
-		Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey", "codeboxx", "Codeboxx1!");
+		Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
     	return d.updateColumn(id, status);
 	}
 	public Battery updateBattery(int id, String status) {
-		Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey", "codeboxx", "Codeboxx1!");
+		Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
     	return d.updateBattery(id, status);
 	}
 
