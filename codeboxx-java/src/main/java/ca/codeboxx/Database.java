@@ -426,15 +426,16 @@ public class Database {
 		List<Elevator> ls = new ArrayList<Elevator>();
 		PreparedStatement s = null;
 		try {
-			s = mysql.prepareStatement("SELECT e.id, s.name, e.serialNumber, e.inspectionDate, e.installDate, e.certificat, e.information, e.note, t.name AS 'type', e.column_id, e.category_id FROM elevators e JOIN statuses s ON s.id=e.status_id JOIN types t ON t.id=e.type_id WHERE s.name !='active';");
+			s = mysql.prepareStatement("SELECT e.id, s.name as 'status', e.serialNumber, e.inspectionDate, e.installDate, e.certificat, e.information, e.note, t.name AS 'type', e.column_id, e.category_id FROM elevators e JOIN statuses s ON s.id=e.status_id JOIN types t ON t.id=e.type_id WHERE s.name !='active';");
 			ResultSet rs = s.executeQuery();
 			while(rs.next()) {
+				
 				ls.add(new Elevator(rs.getInt("id"), rs.getString("status"), rs.getString("serialNumber"), rs.getString("inspectionDate"), rs.getString("installDate"), rs.getString("certificat"), rs.getString("information"), rs.getString("note"), rs.getString("type"), rs.getInt("column_id"), rs.getInt("category_id")));
 			}
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		close();
 		return ls;
