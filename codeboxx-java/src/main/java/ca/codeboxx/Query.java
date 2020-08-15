@@ -38,32 +38,32 @@ public class Query implements GraphQLRootResolver {
     }
     
     public Battery battery(int id) {
-    	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey", "codeboxx", "Codeboxx1!");
+    	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
     	return d.getBattery(id);
     }
     
     public Column column(int id) {
-    	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey", "codeboxx", "Codeboxx1!");
+    	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
     	return d.getColumn(id);
     }
     
     public List<Lead> leads(){
-    	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey", "codeboxx", "Codeboxx1!");
+    	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
     	return d.getLead();
     }
     
     public List<Elevator> elevatorList(){
-    	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey", "codeboxx", "Codeboxx1!");
+    	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
     	return d.getElevatorList();
     }
     
     public Elevator elevator(int id){
-    	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey", "codeboxx", "Codeboxx1!");
+    	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
     	return d.getElevator(id);
     }
     
     public List<Build> buildList(){
-    	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/ThierryHarvey", "codeboxx", "Codeboxx1!");
+    	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
     	return d.getBuildIntervention();
     }
     
