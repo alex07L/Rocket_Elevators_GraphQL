@@ -1,7 +1,7 @@
 # Rocket_Elevators_GraphQL IN java
 this link is use to do the Graphql request with a post method
 ```
-https://relevator2.herokuapp.com/graphql
+https://relevator.herokuapp.com/graphql
 ```
 This link is to test the java aplication
 ```
@@ -88,3 +88,193 @@ query{
 }
 ```
 
+## Intervention List
+```
+query{
+  interventionList{
+    id
+    building_id
+    employee_id
+    start_intervention
+    end_intervention
+    address{
+      street
+      suite
+      city
+      postalCode
+      country
+    }
+  }
+}
+
+```
+
+
+## Intervention Update
+You can change id by a intervention id and complete by one of [complete, inprogress]
+```
+mutation{
+  updateIntervention(id: 3, status: "complete"){
+    id
+    building_id
+    employee_id
+    start_intervention
+    end_intervention
+    address{
+      street
+      suite
+      city
+      postalCode
+      country
+    }
+  }
+}
+
+
+```
+
+## Battery
+You can change id by a id of a battery
+```
+query{
+    battery(id: 5){
+        id
+        status
+    }
+}
+
+```
+
+You can change id by a id of a battery
+You can change inactive by [active, inactive]
+```
+mutation{
+    updateBattery(id: 5, status: "inactive"){
+        id
+        status
+    }
+}
+
+```
+## Column
+You can change id by a id of a column
+```
+query{
+    column(id: 5){
+        id
+        status
+    }
+}
+
+```
+
+You can change id by a id of a battery
+You can change inactive by [active, inactive]
+```
+mutation{
+    updateColumn(id: 5, status: "active"){
+        id
+        status
+    }
+}
+
+```
+## Elevator
+You can change id by a id of a elevator
+```
+query{
+    elevator(id: 5){
+        id
+        status
+        serialNumber
+        inspectionDate
+        installDate
+        certificat
+        information
+        note
+        type
+        column_id
+        category_id
+    }
+}
+
+```
+
+You can change id by a id of a battery
+You can change inactive by [active, inactive]
+```
+mutation{
+    updateElevator(id: 5, status: "inactive"){
+        id
+        status
+        serialNumber
+        inspectionDate
+        installDate
+        certificat
+        information
+        note
+        type
+        column_id
+        category_id
+    }
+}
+
+```
+
+## Elevator List
+```
+query{
+    elevatorList{
+        id
+        status
+        serialNumber
+        inspectionDate
+        installDate
+        certificat
+        information
+        note
+        type
+        column_id
+        category_id
+    }
+}
+
+```
+
+## Building List
+```
+query{
+    buildList{
+        id
+        fullName
+        email
+        cellPhone
+        techName
+        techEmail
+        techPhone
+        address{
+            street
+        }
+        customer_id
+        building_details{
+            key
+            value
+        }
+    }
+}
+```
+## Lead list
+
+```
+query{
+    leads{
+        id
+        fullName
+        entrepriseName
+        cellPhone
+        projectName
+        description
+        type
+    }
+}
+```
