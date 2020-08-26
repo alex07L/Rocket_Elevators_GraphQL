@@ -8,7 +8,6 @@ import ca.codeboxx.model.Battery;
 import ca.codeboxx.model.Build;
 import ca.codeboxx.model.Building;
 import ca.codeboxx.model.Column;
-import ca.codeboxx.model.Customer;
 import ca.codeboxx.model.Elevator;
 import ca.codeboxx.model.Employee;
 import ca.codeboxx.model.Intervention;
@@ -66,11 +65,6 @@ public class Query implements GraphQLRootResolver {
     public List<Build> buildList(){
     	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
     	return d.getBuildIntervention();
-    }
-    
-    public Customer customer(String email) {
-    	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
-    	return d.getCustomer(email);
     }
     
 }
