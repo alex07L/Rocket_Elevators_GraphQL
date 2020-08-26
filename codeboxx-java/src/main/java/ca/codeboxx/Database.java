@@ -163,14 +163,14 @@ public class Database {
 			Build bb = getBuild(id);
 			if (rs.next()) {
 				PreparedStatement m = mysql.prepareStatement(
-						"SELECT a.street, a.suite, a.city, a.postalCode, a.country,c.entrepriseName , c.nameContact ,c.description, c.email, c.cellPhone ,c.authorityEmail ,c.authorityName, c.authorityPhone, a2.street AS 'Cstreet', a2.suite AS 'Csuite', a2.city AS 'Ccity', a2.postalCode AS 'CpostalCode', a2.country AS 'Ccountry' FROM buildings b JOIN addresses a ON a.id=b.address_id JOIN customers c ON c.id= b.customer_id JOIN addresses a2 ON a2.id=c.address_id WHERE b.id="
+						"SELECT a.street, a.suite, a.city, a.postalCode, a.country,c.id as 'cid', c.entrepriseName , c.nameContact ,c.description, c.email, c.cellPhone ,c.authorityEmail ,c.authorityName, c.authorityPhone, a2.street AS 'Cstreet', a2.suite AS 'Csuite', a2.city AS 'Ccity', a2.postalCode AS 'CpostalCode', a2.country AS 'Ccountry' FROM buildings b JOIN addresses a ON a.id=b.address_id JOIN customers c ON c.id= b.customer_id JOIN addresses a2 ON a2.id=c.address_id WHERE b.id="
 								+ id);
 
 				// Execute the Query, and get a java ResultSet
 				ResultSet rs2 = m.executeQuery();
 				// Let's iterate through the java ResultSet
 				if (rs2.next()) {
-					c = new Customer(rs2.getString("entrepriseName"), rs2.getString("nameContact"),
+					c = new Customer(rs2.getInt("cid"),rs2.getString("entrepriseName"), rs2.getString("nameContact"),
 							rs2.getString("cellPhone"), rs2.getString("description"), rs2.getString("email"),
 							rs2.getString("authorityName"), rs2.getString("authorityPhone"),
 							rs2.getString("authorityEmail"),
@@ -539,13 +539,13 @@ public class Database {
 
 		try {
 			PreparedStatement m = mysql.prepareStatement(
-					"SELECT a.street, a.suite, a.city, a.postalCode, a.country,c.entrepriseName , c.nameContact ,c.description, c.email, c.cellPhone ,c.authorityEmail ,c.authorityName, c.authorityPhone, a2.street AS 'Cstreet', a2.suite AS 'Csuite', a2.city AS 'Ccity', a2.postalCode AS 'CpostalCode', a2.country AS 'Ccountry' FROM buildings b JOIN addresses a ON a.id=b.address_id JOIN customers c ON c.id= b.customer_id JOIN addresses a2 ON a2.id=c.address_id WHERE c.email=\""
+					"SELECT a.street, a.suite, a.city, a.postalCode, a.country,c.entrepriseName , c.id as 'cid', c.nameContact ,c.description, c.email, c.cellPhone ,c.authorityEmail ,c.authorityName, c.authorityPhone, a2.street AS 'Cstreet', a2.suite AS 'Csuite', a2.city AS 'Ccity', a2.postalCode AS 'CpostalCode', a2.country AS 'Ccountry' FROM buildings b JOIN addresses a ON a.id=b.address_id JOIN customers c ON c.id= b.customer_id JOIN addresses a2 ON a2.id=c.address_id WHERE c.email=\""
 							+ email+"\"");
 
 			// Execute the Query, and get a java ResultSet
 			ResultSet rs2 = m.executeQuery();
 			if (rs2.next()) {
-				c = new Customer(rs2.getString("entrepriseName"), rs2.getString("nameContact"), rs2.getString("cellPhone"),
+				c = new Customer(rs2.getInt("cid"),rs2.getString("entrepriseName"), rs2.getString("nameContact"), rs2.getString("cellPhone"),
 						rs2.getString("description"), rs2.getString("email"), rs2.getString("authorityName"),
 						rs2.getString("authorityPhone"), rs2.getString("authorityEmail"),
 						new Address(rs2.getString("Cstreet"), rs2.getString("Csuite"), rs2.getString("Ccity"),
