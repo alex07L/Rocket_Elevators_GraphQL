@@ -111,6 +111,7 @@ type Query {
   elevator(id: Int!): Elevator
   buildList: [Build]
   leads: [Lead]
+  customer(email: String!): Customer
 }
 
 type Mutation {
