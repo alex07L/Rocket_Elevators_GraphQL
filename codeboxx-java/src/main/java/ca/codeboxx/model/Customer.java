@@ -2,6 +2,7 @@ package ca.codeboxx.model;
 
 public class Customer {
 	
+	private final int id;
 	private final String entrepriseName;
 	private final String nameContact;
 	private final String cellPhone;
@@ -13,7 +14,8 @@ public class Customer {
 	private final Address address;
 	
 	
-	public Customer(String entrepriseName,String nameContact, String cellPhone, String description, String email, String authorityName, String authorityPhone, String authorityEmail, Address address) {
+	public Customer(int id, String entrepriseName,String nameContact, String cellPhone, String description, String email, String authorityName, String authorityPhone, String authorityEmail, Address address) {
+		this.id=id;
 		this.entrepriseName=entrepriseName;
 		this.nameContact=nameContact;
 		this.cellPhone=cellPhone;
@@ -23,6 +25,10 @@ public class Customer {
 		this.authorityEmail=authorityEmail;
 		this.authorityPhone=authorityPhone;
 		this.address=address;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 	public Address getAddress() {

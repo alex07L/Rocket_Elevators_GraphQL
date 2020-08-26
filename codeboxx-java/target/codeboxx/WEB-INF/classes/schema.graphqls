@@ -29,6 +29,7 @@ type Intervention {
 }
 
 type Customer {
+	id: Int
 	entrepriseName: String
 	nameContact: String
 	cellPhone: String
