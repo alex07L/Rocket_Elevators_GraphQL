@@ -119,7 +119,7 @@ public class Database {
 			if (rs.next()) {
 				int building_id = rs.getInt("building_id");
 				PreparedStatement m = mysql.prepareStatement(
-						"SELECT a.id as 'aid' a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON a.id=b.address_id WHERE b.id="
+						"SELECT a.id as 'aid', a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON a.id=b.address_id WHERE b.id="
 								+ building_id);
 
 				// Execute the Query, and get a java ResultSet
