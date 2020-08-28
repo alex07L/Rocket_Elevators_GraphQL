@@ -15,6 +15,7 @@ import ca.codeboxx.model.Building;
 import ca.codeboxx.model.Building_details;
 import ca.codeboxx.model.Column;
 import ca.codeboxx.model.Customer;
+import ca.codeboxx.model.Cx;
 import ca.codeboxx.model.Elevator;
 import ca.codeboxx.model.Employee;
 import ca.codeboxx.model.Intervention;
@@ -555,8 +556,60 @@ public class Database {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		close();
 		return c;
+	}
+	
+	public Cx cxbyCustomer(String email) {
+		Cx cx = null;
+		List<Build> d = new ArrayList<Build>();
+		List<Battery> b = new ArrayList<Battery>();
+		List<Column> c = new ArrayList<Column>();
+		List<Elevator> elevator = new ArrayList<Elevator>();
+		PreparedStatement m;
+		try {
+			m = mysql.prepareStatement(
+					"SELECT b.id, b.fullName,b.email,b.cellPhone,b.techName,b.techPhone,b.techEmail,b.customer_id, a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON b.address_id=a.id JOIN Customer c ON c.id=b.customer_id WHERE c.email='"
+							+ email+"'");
+			// Execute the Query, and get a java ResultSet
+			ResultSet rs2 = m.executeQuery();
+			// Let's iterate through the java ResultSet
+			while (rs2.next()) {
+				d.add(new Build(rs2.getInt("id"), rs2.getString("fullName"), rs2.getString("email"),
+						rs2.getString("cellPhone"), rs2.getString("techName"), rs2.getString("techEmail"),
+						rs2.getString("techPhone"),
+						new Address(rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
+								rs2.getString("postalCode"), rs2.getString("country")),
+						rs2.getInt("customer_id"), getBuildingDetails(rs2.getInt("id"))));
+				PreparedStatement s = null;
+				s = mysql.prepareStatement("SELECT b.id, s.name FROM batteries b JOIN statuses s ON b.status_id=s.id WHERE b.building_id=" + rs2.getInt("id"));
+				ResultSet rs = s.executeQuery();
+				while (rs.next()) {
+					b.add(new Battery(rs.getInt("id"), rs.getString("name")));
+					PreparedStatement s1 = null;
+					s1 = mysql.prepareStatement("SELECT b.id, s.name FROM columns b JOIN statuses s ON b.status_id=s.id WHERE b.battery_id=" + rs.getInt("id"));
+					ResultSet rs3 = s1.executeQuery();
+					while (rs3.next()) {
+						c.add(new Column(rs3.getInt("id"), rs3.getString("name")));
+						PreparedStatement s2 = null;
+						s2 = mysql.prepareStatement("SELECT e.id, s.name AS 'status', e.serialNumber, e.inspectionDate, e.installDate, e.certificat, e.information, e.note, t.name AS 'type', e.column_id, e.category_id FROM elevators e JOIN statuses s ON s.id=e.status_id JOIN types t ON t.id=e.type_id WHERE e.column_id =" + rs3.getInt("id"));
+						ResultSet rs4 = s1.executeQuery();
+						while (rs4.next()) {
+							elevator.add(new Elevator(rs.getInt("id"), rs.getString("status"), rs.getString("serialNumber"),
+									rs.getString("inspectionDate"), rs.getString("installDate"), rs.getString("certificat"),
+									rs.getString("information"), rs.getString("note"), rs.getString("type"), rs.getInt("column_id"),
+									rs.getInt("category_id")));
+						}
+					}
+				}
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return cx;
 	}
 
 }
