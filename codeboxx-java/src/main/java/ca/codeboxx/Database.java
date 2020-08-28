@@ -596,7 +596,7 @@ public class Database {
 						ResultSet rs4 = s2.executeQuery();
 						while (rs4.next()) {
 							elevator.add(new Elevator(rs4.getInt("id"), rs4.getString("status"), rs4.getString("serialNumber"),
-									rs4.getString("inspectionDate"), rs.getString("installDate"), rs4.getString("certificat"),
+									rs4.getString("inspectionDate"), rs4.getString("installDate"), rs4.getString("certificat"),
 									rs4.getString("information"), rs4.getString("note"), rs4.getString("type"), rs4.getInt("column_id"),
 									rs4.getInt("category_id")));
 						}
