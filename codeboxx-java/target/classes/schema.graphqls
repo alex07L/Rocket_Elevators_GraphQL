@@ -101,6 +101,13 @@ type Elevator {
 	category_id: Int
 }
 
+type Cx{
+	build: [Build]
+	battery: [Battery]
+	column: [Column]
+	elevator: [Elevator]
+}
+
 type Query {
   intervention(id:Int!): Intervention
   buildings(id: Int!): Building
@@ -113,6 +120,7 @@ type Query {
   buildList: [Build]
   leads: [Lead]
   customer(email: String!): Customer
+  cxbyCustomer(email: String!): Cx
 }
 
 type Mutation {

@@ -2,6 +2,7 @@ ca\codeboxx\model\Build.class
 ca\codeboxx\model\Elevator.class
 ca\codeboxx\model\Address.class
 ca\codeboxx\model\Column.class
+ca\codeboxx\model\Cx.class
 ca\codeboxx\Query.class
 ca\codeboxx\GraphQLEndpoint.class
 ca\codeboxx\Database.class
