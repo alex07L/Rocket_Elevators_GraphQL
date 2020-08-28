@@ -604,6 +604,7 @@ public class Database {
 				}
 				
 			}
+			cx = new Cx(d, b, c, elevator);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
