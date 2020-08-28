@@ -569,7 +569,7 @@ public class Database {
 		PreparedStatement m;
 		try {
 			m = mysql.prepareStatement(
-					"SELECT b.id, b.fullName,b.email,b.cellPhone,b.techName,b.techPhone,b.techEmail,b.customer_id, a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON b.address_id=a.id JOIN Customer c ON c.id=b.customer_id WHERE c.email='"
+					"SELECT b.id, b.fullName,b.email,b.cellPhone,b.techName,b.techPhone,b.techEmail,b.customer_id, a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON b.address_id=a.id JOIN customers c ON c.id=b.customer_id WHERE c.email='"
 							+ email+"'");
 			// Execute the Query, and get a java ResultSet
 			ResultSet rs2 = m.executeQuery();
