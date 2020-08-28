@@ -69,11 +69,13 @@ type Build {
 
 type Battery {
 	id: Int!
+	build_id: Int
 	status: String
 }
 
 type Column {
 	id: Int!
+	battery_id: Int
 	status: String
 }
 

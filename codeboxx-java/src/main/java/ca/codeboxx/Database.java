@@ -369,10 +369,10 @@ public class Database {
 		PreparedStatement s = null;
 		try {
 			s = mysql.prepareStatement(
-					"SELECT b.id, s.name FROM batteries b JOIN statuses s ON b.status_id=s.id WHERE b.id =" + id);
+					"SELECT b.id, b.building_id, s.name FROM batteries b JOIN statuses s ON b.status_id=s.id WHERE b.id =" + id);
 			ResultSet rs = s.executeQuery();
 			if (rs.next()) {
-				b = new Battery(rs.getInt("id"), rs.getString("name"));
+				b = new Battery(rs.getInt("id"), rs.getInt("building_id"), rs.getString("name"));
 			}
 
 		} catch (Exception e) {
@@ -403,10 +403,10 @@ public class Database {
 		PreparedStatement s = null;
 		try {
 			s = mysql.prepareStatement(
-					"SELECT c.id, s.name FROM columns c JOIN statuses s ON c.status_id=s.id WHERE c.id = " + id);
+					"SELECT c.id, c.battery_id, s.name FROM columns c JOIN statuses s ON c.status_id=s.id WHERE c.id = " + id);
 			ResultSet rs = s.executeQuery();
 			if (rs.next()) {
-				b = new Column(rs.getInt("id"), rs.getString("name"));
+				b = new Column(rs.getInt("id"), rs.getInt("battery_id"), rs.getString("name"));
 			}
 
 		} catch (Exception e) {
@@ -582,15 +582,15 @@ public class Database {
 								rs2.getString("postalCode"), rs2.getString("country")),
 						rs2.getInt("customer_id"), getBuildingDetails(rs2.getInt("id"))));
 				PreparedStatement s = null;
-				s = mysql.prepareStatement("SELECT b.id, s.name FROM batteries b JOIN statuses s ON b.status_id=s.id WHERE b.building_id=" + rs2.getInt("id"));
+				s = mysql.prepareStatement("SELECT b.id, b.building_id, s.name FROM batteries b JOIN statuses s ON b.status_id=s.id WHERE b.building_id=" + rs2.getInt("id"));
 				ResultSet rs = s.executeQuery();
 				while (rs.next()) {
-					b.add(new Battery(rs.getInt("id"), rs.getString("name")));
+					b.add(new Battery(rs.getInt("id"), rs.getInt("building_id"), rs.getString("name")));
 					PreparedStatement s1 = null;
-					s1 = mysql.prepareStatement("SELECT b.id, s.name FROM columns b JOIN statuses s ON b.status_id=s.id WHERE b.battery_id=" + rs.getInt("id"));
+					s1 = mysql.prepareStatement("SELECT b.id, b.battery_id, s.name FROM columns b JOIN statuses s ON b.status_id=s.id WHERE b.battery_id=" + rs.getInt("id"));
 					ResultSet rs3 = s1.executeQuery();
 					while (rs3.next()) {
-						c.add(new Column(rs3.getInt("id"), rs3.getString("name")));
+						c.add(new Column(rs3.getInt("id"), rs3.getInt("battery_id"), rs3.getString("name")));
 						PreparedStatement s2 = null;
 						s2 = mysql.prepareStatement("SELECT e.id, s.name AS 'status', e.serialNumber, e.inspectionDate, e.installDate, e.certificat, e.information, e.note, t.name AS 'type', e.column_id, e.category_id FROM elevators e JOIN statuses s ON s.id=e.status_id JOIN types t ON t.id=e.type_id WHERE e.column_id =" + rs3.getInt("id"));
 						ResultSet rs4 = s1.executeQuery();
