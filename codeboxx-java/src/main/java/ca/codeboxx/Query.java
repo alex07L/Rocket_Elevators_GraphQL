@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.coxautodev.graphql.tools.GraphQLRootResolver;
 
+import ca.codeboxx.model.Address;
 import ca.codeboxx.model.Battery;
 import ca.codeboxx.model.Build;
 import ca.codeboxx.model.Building;
@@ -77,6 +78,11 @@ public class Query implements GraphQLRootResolver {
     public Cx cxbyCustomer(String email) {
     	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
     	return d.cxbyCustomer(email);
+    }
+    
+    public List<Address> addressbyCustomer(String email){
+    	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
+    	return d.getAddresses(email);
     }
     
 }
