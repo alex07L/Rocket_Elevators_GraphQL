@@ -12,6 +12,10 @@ public class Battery {
 		this.status=status;
 	}
 	
+	public int getBuild_id() {
+		return build_id;
+	}
+	
 	public int getId() {
 		return id;
 	}
