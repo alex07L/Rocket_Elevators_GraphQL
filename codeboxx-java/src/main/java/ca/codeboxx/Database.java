@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class Database {
 		PreparedStatement m;
 		try {
 			m = mysql.prepareStatement(
-					"SELECT b.id, b.fullName,b.email,b.cellPhone,b.techName,b.techPhone,b.techEmail,b.customer_id, a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON b.address_id=a.id WHERE b.id="
+					"SELECT b.id, b.fullName,b.email,b.cellPhone,b.techName,b.techPhone,b.techEmail,b.customer_id, a.id AS 'aid', a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON b.address_id=a.id WHERE b.id="
 							+ building_id);
 			// Execute the Query, and get a java ResultSet
 			ResultSet rs2 = m.executeQuery();
@@ -92,7 +93,7 @@ public class Database {
 				d = new Build(rs2.getInt("id"), rs2.getString("fullName"), rs2.getString("email"),
 						rs2.getString("cellPhone"), rs2.getString("techName"), rs2.getString("techEmail"),
 						rs2.getString("techPhone"),
-						new Address(rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
+						new Address(rs2.getInt("aid"),rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
 								rs2.getString("postalCode"), rs2.getString("country")),
 						rs2.getInt("customer_id"), getBuildingDetails(building_id));
 			}
@@ -118,7 +119,7 @@ public class Database {
 			if (rs.next()) {
 				int building_id = rs.getInt("building_id");
 				PreparedStatement m = mysql.prepareStatement(
-						"SELECT a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON a.id=b.address_id WHERE b.id="
+						"SELECT a.id as 'aid' a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON a.id=b.address_id WHERE b.id="
 								+ building_id);
 
 				// Execute the Query, and get a java ResultSet
@@ -128,7 +129,7 @@ public class Database {
 					i = new Intervention(id, 0, 0, rs.getInt("employee_id"), rs.getInt("building_id"),
 							rs.getInt("battery_id"), rs.getInt("column_id"), rs.getInt("elevator_id"),
 							rs.getString("start_intervention"), rs.getString("end_intervention"),
-							new Address(rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
+							new Address(rs2.getInt("aid"),rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
 									rs2.getString("postalCode"), rs2.getString("country")),
 							getBuild(building_id), rs.getString("status"), rs.getString("resultat"),
 							rs.getString("rapport"));
@@ -164,20 +165,20 @@ public class Database {
 			Build bb = getBuild(id);
 			if (rs.next()) {
 				PreparedStatement m = mysql.prepareStatement(
-						"SELECT a.street, a.suite, a.city, a.postalCode, a.country,c.id as 'cid', c.entrepriseName , c.nameContact ,c.description, c.email, c.cellPhone ,c.authorityEmail ,c.authorityName, c.authorityPhone, a2.street AS 'Cstreet', a2.suite AS 'Csuite', a2.city AS 'Ccity', a2.postalCode AS 'CpostalCode', a2.country AS 'Ccountry' FROM buildings b JOIN addresses a ON a.id=b.address_id JOIN customers c ON c.id= b.customer_id JOIN addresses a2 ON a2.id=c.address_id WHERE b.id="
+						"SELECT a.id as 'aid',a.street, a.suite, a.city, a.postalCode, a.country,c.id as 'cid', c.entrepriseName , c.nameContact ,c.description, c.email, c.cellPhone ,c.authorityEmail ,c.authorityName, c.authorityPhone, a2.id as 'caid',a2.street AS 'Cstreet', a2.suite AS 'Csuite', a2.city AS 'Ccity', a2.postalCode AS 'CpostalCode', a2.country AS 'Ccountry' FROM buildings b JOIN addresses a ON a.id=b.address_id JOIN customers c ON c.id= b.customer_id JOIN addresses a2 ON a2.id=c.address_id WHERE b.id="
 								+ id);
 
 				// Execute the Query, and get a java ResultSet
 				ResultSet rs2 = m.executeQuery();
 				// Let's iterate through the java ResultSet
 				if (rs2.next()) {
-					c = new Customer(rs2.getInt("cid"),rs2.getString("entrepriseName"), rs2.getString("nameContact"),
+					c = new Customer(rs2.getInt("cid"), rs2.getString("entrepriseName"), rs2.getString("nameContact"),
 							rs2.getString("cellPhone"), rs2.getString("description"), rs2.getString("email"),
 							rs2.getString("authorityName"), rs2.getString("authorityPhone"),
 							rs2.getString("authorityEmail"),
-							new Address(rs2.getString("Cstreet"), rs2.getString("Csuite"), rs2.getString("Ccity"),
+							new Address(rs2.getInt("caid"),rs2.getString("Cstreet"), rs2.getString("Csuite"), rs2.getString("Ccity"),
 									rs2.getString("CpostalCode"), rs2.getString("Ccountry")));
-					a = new Address(rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
+					a = new Address(rs2.getInt("aid"),rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
 							rs2.getString("postalCode"), rs2.getString("country"));
 					l.add(new Intervention(rs.getInt("id"), 0, 0, rs.getInt("employee_id"), id, rs.getInt("battery_id"),
 							rs.getInt("column_id"), rs.getInt("elevator_id"), rs.getString("start_intervention"),
@@ -219,14 +220,14 @@ public class Database {
 
 			if (rs.next()) {
 				PreparedStatement m = mysql.prepareStatement(
-						"SELECT a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON a.id=b.address_id WHERE b.id="
+						"SELECT a.id as 'aid' a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON a.id=b.address_id WHERE b.id="
 								+ rs.getInt("building_id"));
 
 				// Execute the Query, and get a java ResultSet
 				ResultSet rs2 = m.executeQuery();
 				// Let's iterate through the java ResultSet
 				if (rs2.next()) {
-					a = new Address(rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
+					a = new Address(rs2.getInt("aid"),rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
 							rs2.getString("postalCode"), rs2.getString("country"));
 					l.add(new Intervention(rs.getInt("id"), 0, 0, rs.getInt("employee_id"), rs.getInt("building_id"),
 							rs.getInt("battery_id"), rs.getInt("column_id"), rs.getInt("elevator_id"),
@@ -278,7 +279,7 @@ public class Database {
 			while (rs.next()) {
 				int building_id = rs.getInt("building_id");
 				PreparedStatement m = mysql.prepareStatement(
-						"SELECT a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON a.id=b.address_id WHERE b.id="
+						"SELECT a.id as 'aid',a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON a.id=b.address_id WHERE b.id="
 								+ building_id);
 
 				// Execute the Query, and get a java ResultSet
@@ -289,7 +290,7 @@ public class Database {
 							rs.getInt("building_id"), rs.getInt("battery_id"), rs.getInt("column_id"),
 							rs.getInt("elevator_id"), rs.getString("start_intervention"),
 							rs.getString("end_intervention"),
-							new Address(rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
+							new Address(rs2.getInt("aid"),rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
 									rs2.getString("postalCode"), rs2.getString("country")),
 							getBuild(building_id), rs.getString("status"), rs.getString("result"),
 							rs.getString("rapport")));
@@ -335,7 +336,7 @@ public class Database {
 			if (rs.next()) {
 				int building_id = rs.getInt("building_id");
 				PreparedStatement m = mysql.prepareStatement(
-						"SELECT a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON a.id=b.address_id WHERE b.id="
+						"SELECT a.id as 'aid', a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON a.id=b.address_id WHERE b.id="
 								+ building_id);
 
 				// Execute the Query, and get a java ResultSet
@@ -346,7 +347,7 @@ public class Database {
 							rs.getInt("building_id"), rs.getInt("battery_id"), rs.getInt("column_id"),
 							rs.getInt("elevator_id"), rs.getString("start_intervention"),
 							rs.getString("end_intervention"),
-							new Address(rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
+							new Address(rs2.getInt("aid"),rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
 									rs2.getString("postalCode"), rs2.getString("country")),
 							getBuild(building_id), rs.getString("status"), rs.getString("result"),
 							rs.getString("rapport"));
@@ -369,7 +370,8 @@ public class Database {
 		PreparedStatement s = null;
 		try {
 			s = mysql.prepareStatement(
-					"SELECT b.id, b.building_id, s.name FROM batteries b JOIN statuses s ON b.status_id=s.id WHERE b.id =" + id);
+					"SELECT b.id, b.building_id, s.name FROM batteries b JOIN statuses s ON b.status_id=s.id WHERE b.id ="
+							+ id);
 			ResultSet rs = s.executeQuery();
 			if (rs.next()) {
 				b = new Battery(rs.getInt("id"), rs.getInt("building_id"), rs.getString("name"));
@@ -403,7 +405,8 @@ public class Database {
 		PreparedStatement s = null;
 		try {
 			s = mysql.prepareStatement(
-					"SELECT c.id, c.battery_id, s.name FROM columns c JOIN statuses s ON c.status_id=s.id WHERE c.id = " + id);
+					"SELECT c.id, c.battery_id, s.name FROM columns c JOIN statuses s ON c.status_id=s.id WHERE c.id = "
+							+ id);
 			ResultSet rs = s.executeQuery();
 			if (rs.next()) {
 				b = new Column(rs.getInt("id"), rs.getInt("battery_id"), rs.getString("name"));
@@ -517,13 +520,13 @@ public class Database {
 		PreparedStatement s = null;
 		try {
 			s = mysql.prepareStatement(
-					"SELECT DISTINCT b.id, b.fullName, b.cellPhone, b.email,b.techEmail, b.techName, b.techPhone, b.customer_id, a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN batteries b2 ON b2.building_id=b.id JOIN addresses a ON a.id=b.address_id JOIN `columns` c ON b2.id=c.battery_id JOIN elevators e ON e.column_id=c.id WHERE b2.status_id=(SELECT s2.id FROM statuses s2 WHERE s2.name='intervention') OR c.status_id=(SELECT s2.id FROM statuses s2 WHERE s2.name='intervention') OR e.status_id=(SELECT s2.id FROM statuses s2 WHERE s2.name='intervention');");
+					"SELECT DISTINCT b.id, b.fullName, b.cellPhone, b.email,b.techEmail, b.techName, b.techPhone, b.customer_id, a.id as 'aid',a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN batteries b2 ON b2.building_id=b.id JOIN addresses a ON a.id=b.address_id JOIN `columns` c ON b2.id=c.battery_id JOIN elevators e ON e.column_id=c.id WHERE b2.status_id=(SELECT s2.id FROM statuses s2 WHERE s2.name='intervention') OR c.status_id=(SELECT s2.id FROM statuses s2 WHERE s2.name='intervention') OR e.status_id=(SELECT s2.id FROM statuses s2 WHERE s2.name='intervention');");
 			ResultSet rs = s.executeQuery();
 			while (rs.next()) {
 				b.add(new Build(rs.getInt("id"), rs.getString("fullName"), rs.getString("email"),
 						rs.getString("cellPhone"), rs.getString("techName"), rs.getString("techEmail"),
 						rs.getString("techPhone"),
-						new Address(rs.getString("street"), rs.getString("suite"), rs.getString("city"),
+						new Address(rs.getInt("aid"),rs.getString("street"), rs.getString("suite"), rs.getString("city"),
 								rs.getString("postalCode"), rs.getString("country")),
 						rs.getInt("customer_id"), getBuildingDetails(rs.getInt("id"))));
 			}
@@ -540,17 +543,17 @@ public class Database {
 
 		try {
 			PreparedStatement m = mysql.prepareStatement(
-					"SELECT a.street, a.suite, a.city, a.postalCode, a.country,c.entrepriseName , c.id as 'cid', c.nameContact ,c.description, c.email, c.cellPhone ,c.authorityEmail ,c.authorityName, c.authorityPhone, a2.street AS 'Cstreet', a2.suite AS 'Csuite', a2.city AS 'Ccity', a2.postalCode AS 'CpostalCode', a2.country AS 'Ccountry' FROM buildings b JOIN addresses a ON a.id=b.address_id JOIN customers c ON c.id= b.customer_id JOIN addresses a2 ON a2.id=c.address_id WHERE c.email=\""
-							+ email+"\"");
+					"SELECT a.street, a.suite, a.city, a.postalCode, a.country,c.entrepriseName , c.id as 'cid', c.nameContact ,c.description, c.email, c.cellPhone ,c.authorityEmail ,c.authorityName, c.authorityPhone, a2.id AS 'caid' a2.street AS 'Cstreet', a2.suite AS 'Csuite', a2.city AS 'Ccity', a2.postalCode AS 'CpostalCode', a2.country AS 'Ccountry' FROM buildings b JOIN addresses a ON a.id=b.address_id JOIN customers c ON c.id= b.customer_id JOIN addresses a2 ON a2.id=c.address_id WHERE c.email=\""
+							+ email + "\"");
 
 			// Execute the Query, and get a java ResultSet
 			ResultSet rs2 = m.executeQuery();
 			if (rs2.next()) {
-				c = new Customer(rs2.getInt("cid"),rs2.getString("entrepriseName"), rs2.getString("nameContact"), rs2.getString("cellPhone"),
-						rs2.getString("description"), rs2.getString("email"), rs2.getString("authorityName"),
-						rs2.getString("authorityPhone"), rs2.getString("authorityEmail"),
-						new Address(rs2.getString("Cstreet"), rs2.getString("Csuite"), rs2.getString("Ccity"),
-								rs2.getString("CpostalCode"), rs2.getString("Ccountry")));
+				c = new Customer(rs2.getInt("cid"), rs2.getString("entrepriseName"), rs2.getString("nameContact"),
+						rs2.getString("cellPhone"), rs2.getString("description"), rs2.getString("email"),
+						rs2.getString("authorityName"), rs2.getString("authorityPhone"),
+						rs2.getString("authorityEmail"), new Address(rs2.getInt("caid"),rs2.getString("Cstreet"), rs2.getString("Csuite"),
+								rs2.getString("Ccity"), rs2.getString("CpostalCode"), rs2.getString("Ccountry")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -559,7 +562,7 @@ public class Database {
 		close();
 		return c;
 	}
-	
+
 	public Cx cxbyCustomer(String email) {
 		Cx cx = null;
 		List<Build> d = new ArrayList<Build>();
@@ -569,8 +572,8 @@ public class Database {
 		PreparedStatement m;
 		try {
 			m = mysql.prepareStatement(
-					"SELECT b.id, b.fullName,b.email,b.cellPhone,b.techName,b.techPhone,b.techEmail,b.customer_id, a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON b.address_id=a.id JOIN customers c ON c.id=b.customer_id WHERE c.email='"
-							+ email+"'");
+					"SELECT b.id, b.fullName,b.email,b.cellPhone,b.techName,b.techPhone,b.techEmail,b.customer_id, a.id as 'aid', a.street, a.suite, a.city, a.postalCode, a.country FROM buildings b JOIN addresses a ON b.address_id=a.id JOIN customers c ON c.id=b.customer_id WHERE c.email='"
+							+ email + "'");
 			// Execute the Query, and get a java ResultSet
 			ResultSet rs2 = m.executeQuery();
 			// Let's iterate through the java ResultSet
@@ -578,31 +581,38 @@ public class Database {
 				d.add(new Build(rs2.getInt("id"), rs2.getString("fullName"), rs2.getString("email"),
 						rs2.getString("cellPhone"), rs2.getString("techName"), rs2.getString("techEmail"),
 						rs2.getString("techPhone"),
-						new Address(rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
+						new Address(rs2.getInt("aid"),rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
 								rs2.getString("postalCode"), rs2.getString("country")),
 						rs2.getInt("customer_id"), getBuildingDetails(rs2.getInt("id"))));
 				PreparedStatement s = null;
-				s = mysql.prepareStatement("SELECT b.id, b.building_id, s.name FROM batteries b JOIN statuses s ON b.status_id=s.id WHERE b.building_id=" + rs2.getInt("id"));
+				s = mysql.prepareStatement(
+						"SELECT b.id, b.building_id, s.name FROM batteries b JOIN statuses s ON b.status_id=s.id WHERE b.building_id="
+								+ rs2.getInt("id"));
 				ResultSet rs = s.executeQuery();
 				while (rs.next()) {
 					b.add(new Battery(rs.getInt("id"), rs.getInt("building_id"), rs.getString("name")));
 					PreparedStatement s1 = null;
-					s1 = mysql.prepareStatement("SELECT b.id, b.battery_id, s.name FROM columns b JOIN statuses s ON b.status_id=s.id WHERE b.battery_id=" + rs.getInt("id"));
+					s1 = mysql.prepareStatement(
+							"SELECT b.id, b.battery_id, s.name FROM columns b JOIN statuses s ON b.status_id=s.id WHERE b.battery_id="
+									+ rs.getInt("id"));
 					ResultSet rs3 = s1.executeQuery();
 					while (rs3.next()) {
 						c.add(new Column(rs3.getInt("id"), rs3.getInt("battery_id"), rs3.getString("name")));
 						PreparedStatement s2 = null;
-						s2 = mysql.prepareStatement("SELECT e.id, s.name AS 'status', e.serialNumber, e.inspectionDate, e.installDate, e.certificat, e.information, e.note, t.name AS 'type', e.column_id, e.category_id FROM elevators e JOIN statuses s ON s.id=e.status_id JOIN types t ON t.id=e.type_id WHERE e.column_id =" + rs3.getInt("id"));
+						s2 = mysql.prepareStatement(
+								"SELECT e.id, s.name AS 'status', e.serialNumber, e.inspectionDate, e.installDate, e.certificat, e.information, e.note, t.name AS 'type', e.column_id, e.category_id FROM elevators e JOIN statuses s ON s.id=e.status_id JOIN types t ON t.id=e.type_id WHERE e.column_id ="
+										+ rs3.getInt("id"));
 						ResultSet rs4 = s2.executeQuery();
 						while (rs4.next()) {
-							elevator.add(new Elevator(rs4.getInt("id"), rs4.getString("status"), rs4.getString("serialNumber"),
-									rs4.getString("inspectionDate"), rs4.getString("installDate"), rs4.getString("certificat"),
-									rs4.getString("information"), rs4.getString("note"), rs4.getString("type"), rs4.getInt("column_id"),
-									rs4.getInt("category_id")));
+							elevator.add(new Elevator(rs4.getInt("id"), rs4.getString("status"),
+									rs4.getString("serialNumber"), rs4.getString("inspectionDate"),
+									rs4.getString("installDate"), rs4.getString("certificat"),
+									rs4.getString("information"), rs4.getString("note"), rs4.getString("type"),
+									rs4.getInt("column_id"), rs4.getInt("category_id")));
 						}
 					}
 				}
-				
+
 			}
 			cx = new Cx(d, b, c, elevator);
 		} catch (SQLException e) {
@@ -611,6 +621,76 @@ public class Database {
 		}
 		close();
 		return cx;
+	}
+
+	public List<Address> getAddresses(String email) {
+		List<Address> a = new ArrayList<Address>();
+		try {
+			PreparedStatement m = mysql.prepareStatement(
+					"SELECT a.id as 'aid',a.street, a.suite, a.city, a.postalCode, a.country,c.entrepriseName , c.id as 'cid', c.nameContact ,c.description, c.email, c.cellPhone ,c.authorityEmail ,c.authorityName, c.authorityPhone, a2.id as 'caid', a2.street AS 'Cstreet', a2.suite AS 'Csuite', a2.city AS 'Ccity', a2.postalCode AS 'CpostalCode', a2.country AS 'Ccountry' FROM buildings b JOIN addresses a ON a.id=b.address_id JOIN customers c ON c.id= b.customer_id JOIN addresses a2 ON a2.id=c.address_id WHERE c.email=\""
+							+ email + "\"");
+
+			// Execute the Query, and get a java ResultSet
+			ResultSet rs2 = m.executeQuery();
+			if (rs2.next()) {
+			 a.add(new Address(rs2.getInt("caid"),rs2.getString("Cstreet"), rs2.getString("Csuite"),
+								rs2.getString("Ccity"), rs2.getString("CpostalCode"), rs2.getString("Ccountry")));
+			 a.add(new Address(rs2.getInt("aid"),rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
+							rs2.getString("postalCode"), rs2.getString("country")));
+			}
+			while(rs2.next()) {
+				a.add(new Address(rs2.getInt("caid"),rs2.getString("street"), rs2.getString("suite"), rs2.getString("city"),
+						rs2.getString("postalCode"), rs2.getString("country")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return a;
+	}
+	
+	public Intervention addIntervention(String customer, int build, int battery, int column, int elevator, String description) {
+		Intervention inter = null;
+		try {
+			PreparedStatement m = mysql.prepareStatement(
+					"SELECT c.id FROM customers c WHERE c.email='"+ customer + "'");
+			ResultSet rs2 = m.executeQuery();
+			if(rs2.next()) {
+				int c = rs2.getInt("id");
+				PreparedStatement i = mysql.prepareStatement("INSERT INTO interventions (customer_id, building_id, battery_id, column_id, elevator_id, `result`, rapport, status, created_at, updated_at ) VALUES(?, ?, ?, ?, ?, 'incomplete', ?, 'pending', CURDATE(), CURDATE());");
+				i.setInt(1, c);
+				i.setInt(2, build);
+				if(battery != 0) {
+					i.setInt(3, battery);
+				}else {
+					i.setNull(3, Types.INTEGER);
+				}
+				if(column != 0) {
+					i.setInt(4, column);
+				}else {
+					i.setNull(4, Types.INTEGER);
+				}
+				if(elevator != 0 ) {
+					i.setInt(5, elevator);
+				}else {
+					i.setNull(5, Types.INTEGER);
+				}
+				i.setString(6, description);
+				i.executeUpdate();
+				ResultSet r =i.getGeneratedKeys();
+				r.next();
+				
+				inter = getIntervention(r.getInt(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//already closed
+		//close();
+		
+		return inter;
 	}
 
 }

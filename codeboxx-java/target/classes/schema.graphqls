@@ -1,4 +1,5 @@
 type Address {
+  id: Int!
   street: String
   suite: String
   city: String
@@ -123,6 +124,7 @@ type Query {
   leads: [Lead]
   customer(email: String!): Customer
   cxbyCustomer(email: String!): Cx
+  addressbyCustomer(email: String!): [Address]
 }
 
 type Mutation {
@@ -130,6 +132,7 @@ type Mutation {
 	updateElevator(id: Int!, status: String!): Elevator
 	updateColumn(id: Int!, status: String!): Column
 	updateBattery(id: Int!, status: String!): Battery
+	addIntevention(customer: String!, build: Int!, battery: Int, column: Int, elevator: Int, description: String): Intervention
 }
 
 schema {
