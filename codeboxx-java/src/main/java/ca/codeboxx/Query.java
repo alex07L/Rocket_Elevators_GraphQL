@@ -74,7 +74,7 @@ public class Query implements GraphQLRootResolver {
     	return d.getCustomer(email);
     }
     
-    public Cx buildingbyCustomer(String email) {
+    public Cx cxbyCustomer(String email) {
     	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
     	return d.cxbyCustomer(email);
     }
