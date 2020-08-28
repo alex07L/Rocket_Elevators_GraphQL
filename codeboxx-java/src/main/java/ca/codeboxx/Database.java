@@ -593,7 +593,7 @@ public class Database {
 						c.add(new Column(rs3.getInt("id"), rs3.getInt("battery_id"), rs3.getString("name")));
 						PreparedStatement s2 = null;
 						s2 = mysql.prepareStatement("SELECT e.id, s.name AS 'status', e.serialNumber, e.inspectionDate, e.installDate, e.certificat, e.information, e.note, t.name AS 'type', e.column_id, e.category_id FROM elevators e JOIN statuses s ON s.id=e.status_id JOIN types t ON t.id=e.type_id WHERE e.column_id =" + rs3.getInt("id"));
-						ResultSet rs4 = s1.executeQuery();
+						ResultSet rs4 = s2.executeQuery();
 						while (rs4.next()) {
 							elevator.add(new Elevator(rs4.getInt("id"), rs4.getString("status"), rs4.getString("serialNumber"),
 									rs4.getString("inspectionDate"), rs.getString("installDate"), rs4.getString("certificat"),
