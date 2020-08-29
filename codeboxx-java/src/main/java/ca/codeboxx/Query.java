@@ -85,4 +85,9 @@ public class Query implements GraphQLRootResolver {
     	return d.getAddresses(email);
     }
     
+    public Address address(int id) {
+    	Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
+    	return d.getAddresses(id);
+    }
+    
 }
