@@ -2,6 +2,7 @@ package ca.codeboxx;
 
 import com.coxautodev.graphql.tools.GraphQLRootResolver;
 
+import ca.codeboxx.model.Address;
 import ca.codeboxx.model.Battery;
 import ca.codeboxx.model.Column;
 import ca.codeboxx.model.Elevator;
@@ -33,6 +34,11 @@ public class Mutation implements GraphQLRootResolver {
 	public Intervention addIntevention(String customer, int build, int battery, int column, int elevator, String description) {
 		Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
 		return d.addIntervention(customer, build, battery, column, elevator, description);
+	}
+	
+	public Address UpdateAddress(int id, String street, String suite, String city, String postalCode, String country) {
+		Database d = new Database("jdbc:mysql://codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque","codeboxx","Codeboxx1!", "jdbc:postgresql://codeboxx-postgresql.cq6zrczewpu2.us-east-1.rds.amazonaws.com/AlexandreLevesque", "codeboxx", "Codeboxx1!");
+		return d.updateAddress(id, street, city, country, postalCode, suite);
 	}
 
 }

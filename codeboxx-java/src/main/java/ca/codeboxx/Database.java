@@ -650,6 +650,46 @@ public class Database {
 		return a;
 	}
 	
+	public Address getAddresses(int id) {
+		Address a = null;
+		try {
+			PreparedStatement m = mysql.prepareStatement(
+					"SELECT a.id as 'aid',a.street, a.suite, a.city, a.postalCode, a.country FROM addresses a WHERE a.id="+ id );
+
+			// Execute the Query, and get a java ResultSet
+			ResultSet rs2 = m.executeQuery();
+			if (rs2.next()) {
+			 a =new Address(rs2.getInt("aid"),rs2.getString("street"), rs2.getString("suite"),
+								rs2.getString("city"), rs2.getString("postalCode"), rs2.getString("country"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return a;
+	}
+	
+	public Address updateAddress(int id, String street, String city, String country, String postalcode, String suite) {
+		PreparedStatement s = null;
+		try {
+			s = mysql.prepareStatement(
+					"UPDATE addresses a SET a.street=?, a.city=?, a.country=?, a.postalCode=?, a.suite=? WHERE e.id = ?");
+			s.setString(1, street);
+			s.setString(2, city);
+			s.setString(3, country);
+			s.setString(4, postalcode);
+			s.setString(5, suite);
+			s.setInt(6, id);
+			s.executeUpdate();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return getAddresses(id);
+	}
+	
 	public Intervention addIntervention(String customer, int build, int battery, int column, int elevator, String description) {
 		Intervention inter = null;
 		try {

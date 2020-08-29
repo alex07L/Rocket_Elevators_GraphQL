@@ -125,6 +125,7 @@ type Query {
   customer(email: String!): Customer
   cxbyCustomer(email: String!): Cx
   addressbyCustomer(email: String!): [Address]
+  address(id: Int!): Address
 }
 
 type Mutation {
@@ -132,7 +133,8 @@ type Mutation {
 	updateElevator(id: Int!, status: String!): Elevator
 	updateColumn(id: Int!, status: String!): Column
 	updateBattery(id: Int!, status: String!): Battery
-	addIntevention(customer: String!, build: Int!, battery: Int, column: Int, elevator: Int, description: String): Intervention
+	addIntevention(customer: String!, build: Int!, battery: Int!, column: Int!, elevator: Int!, description: String!): Intervention
+	UpdateAddress(id: Int!, street: String!, suite: String!, city: String!, postalCode: String!, country: String!): Address
 }
 
 schema {
