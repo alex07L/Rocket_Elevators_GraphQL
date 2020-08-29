@@ -674,7 +674,7 @@ public class Database {
 		PreparedStatement s = null;
 		try {
 			s = mysql.prepareStatement(
-					"UPDATE addresses a SET a.street=?, a.city=?, a.country=?, a.postalCode=?, a.suite=? WHERE e.id = ?");
+					"UPDATE addresses a SET a.street=?, a.city=?, a.country=?, a.postalCode=?, a.suite=? WHERE a.id = ?");
 			s.setString(1, street);
 			s.setString(2, city);
 			s.setString(3, country);
