@@ -732,5 +732,23 @@ public class Database {
 		
 		return inter;
 	}
+	
+	public Customer updateEmail(String email, String newEmail) {
+		Customer c = null;
+		PreparedStatement s = null;
+		try {
+			s = mysql.prepareStatement(
+					"UPDATE customers c SET c.email=? WHERE c.email= ?");
+			s.setString(1, newEmail);
+			s.setString(2, email);
+			s.executeUpdate();
+			
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return getCustomer(newEmail);
+	}
 
 }
