@@ -543,7 +543,7 @@ public class Database {
 
 		try {
 			PreparedStatement m = mysql.prepareStatement(
-					"SELECT a.street, a.suite, a.city, a.postalCode, a.country,c.entrepriseName , c.id as 'cid', c.nameContact ,c.description, c.email, c.cellPhone ,c.authorityEmail ,c.authorityName, c.authorityPhone, a2.id AS 'caid' a2.street AS 'Cstreet', a2.suite AS 'Csuite', a2.city AS 'Ccity', a2.postalCode AS 'CpostalCode', a2.country AS 'Ccountry' FROM buildings b JOIN addresses a ON a.id=b.address_id JOIN customers c ON c.id= b.customer_id JOIN addresses a2 ON a2.id=c.address_id WHERE c.email=\""
+					"SELECT c.entrepriseName , c.id as 'cid', c.nameContact ,c.description, c.email, c.cellPhone ,c.authorityEmail ,c.authorityName, c.authorityPhone, a2.id AS 'caid', a2.street AS 'Cstreet', a2.suite AS 'Csuite', a2.city AS 'Ccity', a2.postalCode AS 'CpostalCode', a2.country AS 'Ccountry' FROM customers c JOIN addresses a2 ON a2.id=c.address_id WHERE c.email=\""
 							+ email + "\"");
 
 			// Execute the Query, and get a java ResultSet
