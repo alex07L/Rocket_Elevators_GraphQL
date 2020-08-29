@@ -135,6 +135,7 @@ type Mutation {
 	updateBattery(id: Int!, status: String!): Battery
 	addIntevention(customer: String!, build: Int!, battery: Int!, column: Int!, elevator: Int!, description: String!): Intervention
 	UpdateAddress(id: Int!, street: String!, suite: String!, city: String!, postalCode: String!, country: String!): Address
+	updateEmail(email: String!, newEmail: String!): Customer
 }
 
 schema {
