@@ -690,6 +690,7 @@ public class Database {
 		return getAddresses(id);
 	}
 	
+	//create a intervention
 	public Intervention addIntervention(String customer, int build, int battery, int column, int elevator, String description) {
 		Intervention inter = null;
 		try {
@@ -698,25 +699,26 @@ public class Database {
 			ResultSet rs2 = m.executeQuery();
 			if(rs2.next()) {
 				int c = rs2.getInt("id");
-				PreparedStatement i = mysql.prepareStatement("INSERT INTO interventions (customer_id, building_id, battery_id, column_id, elevator_id, `result`, rapport, status, created_at, updated_at ) VALUES(?, ?, ?, ?, ?, 'incomplete', ?, 'pending', CURDATE(), CURDATE());");
+				PreparedStatement i = mysql.prepareStatement("INSERT INTO interventions (author_id,customer_id, building_id, battery_id, column_id, elevator_id, `result`, rapport, status, created_at, updated_at ) VALUES(?, ?, ?, ?, ?, ?, 'incomplete', ?, 'pending', CURDATE(), CURDATE());");
 				i.setInt(1, c);
-				i.setInt(2, build);
+				i.setInt(2, c);
+				i.setInt(3, build);
 				if(battery != 0) {
-					i.setInt(3, battery);
-				}else {
-					i.setNull(3, Types.INTEGER);
-				}
-				if(column != 0) {
-					i.setInt(4, column);
+					i.setInt(4, battery);
 				}else {
 					i.setNull(4, Types.INTEGER);
 				}
-				if(elevator != 0 ) {
-					i.setInt(5, elevator);
+				if(column != 0) {
+					i.setInt(5, column);
 				}else {
 					i.setNull(5, Types.INTEGER);
 				}
-				i.setString(6, description);
+				if(elevator != 0 ) {
+					i.setInt(6, elevator);
+				}else {
+					i.setNull(6, Types.INTEGER);
+				}
+				i.setString(7, description);
 				i.executeUpdate();
 				ResultSet r =i.getGeneratedKeys();
 				r.next();
