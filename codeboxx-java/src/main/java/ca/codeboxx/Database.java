@@ -693,6 +693,17 @@ public class Database {
 	//create a intervention
 	public Intervention addIntervention(String customer, int build, int battery, int column, int elevator, String description) {
 		Intervention inter = null;
+		//set null if we can find by one of these
+		if(elevator !=0) {
+			battery =0;
+			column=0;
+		}else if(column !=0) {
+			battery =0;
+			elevator=0;
+		}else if(battery !=0) {
+			elevator =0;
+			column=0;
+		}
 		try {
 			PreparedStatement m = mysql.prepareStatement(
 					"SELECT c.id FROM customers c WHERE c.email='"+ customer + "'");
