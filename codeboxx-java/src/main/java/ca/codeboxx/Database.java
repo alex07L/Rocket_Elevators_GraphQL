@@ -538,6 +538,7 @@ public class Database {
 		return b;
 	}
 
+	//return customer object from customer email
 	public Customer getCustomer(String email) {
 		Customer c = null;
 
@@ -563,6 +564,7 @@ public class Database {
 		return c;
 	}
 
+	//get all customer services
 	public Cx cxbyCustomer(String email) {
 		Cx cx = null;
 		List<Build> d = new ArrayList<Build>();
@@ -623,6 +625,7 @@ public class Database {
 		return cx;
 	}
 
+	//get list of address for a customer (first address in the list will be the customer address)
 	public List<Address> getAddresses(String email) {
 		List<Address> a = new ArrayList<Address>();
 		try {
@@ -670,6 +673,7 @@ public class Database {
 		return a;
 	}
 	
+	// update address by address id
 	public Address updateAddress(int id, String street, String city, String country, String postalcode, String suite) {
 		PreparedStatement s = null;
 		try {
@@ -746,6 +750,8 @@ public class Database {
 		return inter;
 	}
 	
+	
+	//update email of a customer
 	public Customer updateEmail(String email, String newEmail) {
 		Customer c = null;
 		PreparedStatement s = null;
