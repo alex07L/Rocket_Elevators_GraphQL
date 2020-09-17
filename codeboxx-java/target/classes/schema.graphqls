@@ -123,6 +123,7 @@ type Query {
   buildList: [Build]
   leads: [Lead]
   customer(email: String!): Customer
+  getEmployee(email: String!): Employee
   cxbyCustomer(email: String!): Cx
   addressbyCustomer(email: String!): [Address]
   address(id: Int!): Address
