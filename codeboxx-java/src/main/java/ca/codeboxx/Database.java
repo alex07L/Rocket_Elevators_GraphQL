@@ -769,5 +769,30 @@ public class Database {
 		
 		return getCustomer(newEmail);
 	}
+	
+	public Employee getEmployee(String email) {
+		Employee i = null;
+		PreparedStatement state = null;
+		try {
+			
+			PreparedStatement employee = mysql
+					.prepareStatement("SELECT id, email, firstName, lastName, title FROM employees WHERE email=" + email);
+
+			// Execute the Query, and get a java ResultSet
+			ResultSet rs3 = employee.executeQuery();
+			// Let's iterate through the java ResultSet
+			if (rs3.next()) {
+				i = new Employee(rs3.getInt("id"), rs3.getString("firstName"), rs3.getString("lastName"), rs3.getString("email"),
+						rs3.getString("title"), new ArrayList<Intervention>());
+			}
+
+		} catch (
+
+		SQLException e) {
+			e.printStackTrace();
+		}
+		close();
+		return i;
+	}
 
 }
