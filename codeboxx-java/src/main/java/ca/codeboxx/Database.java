@@ -776,8 +776,8 @@ public class Database {
 		try {
 			
 			PreparedStatement employee = mysql
-					.prepareStatement("SELECT id, email, firstName, lastName, title FROM employees WHERE email=" + email);
-
+					.prepareStatement("SELECT id, email, firstName, lastName, title FROM employees WHERE email=?");
+			employee.setString(1, email);
 			// Execute the Query, and get a java ResultSet
 			ResultSet rs3 = employee.executeQuery();
 			// Let's iterate through the java ResultSet
