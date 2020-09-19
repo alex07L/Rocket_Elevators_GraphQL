@@ -353,3 +353,15 @@ mutation{
     }
 }
 ```
+
+
+## Employee
+### get employee by email
+
+```
+query getEmployee($email: String){
+        getEmployee(email: $email){
+            id
+        }
+    }
+```
